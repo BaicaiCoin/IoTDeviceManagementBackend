@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.iotdevicemanagementbackend.mapper.UserMapper">
+    <insert id="addUser" parameterType="User">
+        insert into iot_device_management.user(user_name, email, password) values (#{userName}, #{email}, #{password});
+    </insert>
+
+    <select id="quertUserByName" parameterType="User" resultType="int">
+        select user_id from user where user_name = #{userName};
+    </select>
+
+    <select id="quertUserByNameAndPs" parameterType="User" resultType="int">
+        select user_id from user where user_name = #{userName} and password = #{password};
+    </select>
+
+    <select id="queryUserByEmail" parameterType="User" resultType="int">
+        select user_id from user where email = #{email};
+    </select>
+
+    <select id="queryUserByEmailAndPs" parameterType="User" resultType="int">
+        select user_id from user where email = #{email} and password = #{password};
+    </select>
+
+</mapper>
