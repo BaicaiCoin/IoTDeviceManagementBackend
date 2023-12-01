@@ -7,4 +7,5 @@
         insert into iot_device_management.device(device_name, type, description, user_id, create_time, last_active_time) values (#{deviceName}, #{type}, #{description}, #{userId}, #{createTime}, #{lastActiveTime});
     </insert>
 
+
 </mapper>
