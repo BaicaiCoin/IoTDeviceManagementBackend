@@ -85,7 +85,7 @@ public class UserService {
         User user = new User(0, userName, password);
         String encryptUserPassword = userMapper.queryPsByName(user);
         String userPassword = JasyptUtils.decrypt(encryptUserPassword, "123456");
-        if(!userPassword.equals(password)) return 5;
+        if(!userPassword.equals(password)) return 1;
         else return 0;
     }
 

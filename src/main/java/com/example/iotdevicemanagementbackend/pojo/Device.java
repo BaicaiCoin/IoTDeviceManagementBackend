@@ -25,10 +25,32 @@ public class Device {
         this.type = type;
         this.description = description;
         this.userId = userId;
-        this.createTime = new Timestamp(System.currentTimeMillis());
-        this.lastActiveTime = new Timestamp(System.currentTimeMillis());
         this.createTime = createTime;
         this.lastActiveTime = lastActiveTime;
+    }
+
+    public Device(int deviceId, String deviceName, int type, String description, int userId, Timestamp createTime, Timestamp lastActiveTime) {
+        this.deviceId = deviceId;
+        this.deviceName = deviceName;
+        this.type = type;
+        this.description = description;
+        this.userId = userId;
+        this.createTime = createTime;
+        this.lastActiveTime = lastActiveTime;
+    }
+
+    public Device(int createType, int id) {
+        if(createType == 0) this.deviceId = id;
+        else if(createType == 1)this.userId = id;
+    }
+
+    public Device(String createType, int deviceId, String content) {
+        switch (createType) {
+            case "name" -> this.deviceName = content;
+            case "description" -> this.description = content;
+            case "type" -> this.type = Integer.parseInt(content);
+        }
+        this.deviceId = deviceId;
     }
 
     public int getUserId() {

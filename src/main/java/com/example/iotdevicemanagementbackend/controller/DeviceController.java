@@ -1,5 +1,6 @@
 package com.example.iotdevicemanagementbackend.controller;
 
+import com.example.iotdevicemanagementbackend.pojo.DeviceResponse;
 import com.example.iotdevicemanagementbackend.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,35 @@ public class DeviceController {
         return deviceService.addDevice(deviceName, type, description, userId, token);
     }
 
+    @RequestMapping("queryDevice/{deviceId}/{token}")
+    public DeviceResponse queryDevice(@PathVariable int deviceId,
+                              @PathVariable String token) {
+        return deviceService.queryDevice(deviceId, token);
+    }
 
+    @RequestMapping("queryDevices/{userId}/{token}")
+    public DeviceResponse queryDevices(@PathVariable int userId,
+                                      @PathVariable String token) {
+        return deviceService.queryDevices(userId, token);
+    }
+
+    @RequestMapping("changeDevice/{deviceId}/{changeItem}/{changeContent}/{token}")
+    public int changeDevice(@PathVariable int deviceId,
+                            @PathVariable String changeItem,
+                            @PathVariable String changeContent,
+                            @PathVariable String token) {
+        return deviceService.changeDevice(deviceId, changeItem, changeContent, token);
+    }
+
+    @RequestMapping("queryDeviceNum/{userId}/{token}")
+    public int queryDeviceNum(@PathVariable int userId,
+                              @PathVariable String token) {
+        return deviceService.queryDeviceNum(userId, token);
+    }
+
+    @RequestMapping("queryConnectedDeviceNum/{userId}/{token}")
+    public int queryConnectedDeviceNum(@PathVariable int userId,
+                              @PathVariable String token) {
+        return deviceService.queryConnectedDeviceNum(userId, token);
+    }
 }

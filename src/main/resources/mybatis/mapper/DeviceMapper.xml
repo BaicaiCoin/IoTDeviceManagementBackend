@@ -7,5 +7,31 @@
         insert into iot_device_management.device(device_name, type, description, user_id, create_time, last_active_time) values (#{deviceName}, #{type}, #{description}, #{userId}, #{createTime}, #{lastActiveTime});
     </insert>
 
+    <select id="queryDeviceExist" parameterType="Device" resultType="int">
+        select count(*) from device where device_id = #{deviceId};
+    </select>
 
+    <select id="queryDevice" parameterType="Device" resultType="Device">
+        select * from device where device_id = #{deviceId};
+    </select>
+
+    <select id="queryDevicesExist" parameterType="Device" resultType="int">
+        select count(*) from device where user_id = #{userId};
+    </select>
+
+    <select id="queryDevices" parameterType="Device" resultType="Device">
+        select * from device where user_id = #{userId};
+    </select>
+
+    <update id="changeName" parameterType="Device">
+        update device set device_name = #{deviceName} where device_id = #{deviceId}
+    </update>
+
+    <update id="changeType" parameterType="Device">
+        update device set type = #{type} where device_id = #{deviceId}
+    </update>
+
+    <update id="changeDescription" parameterType="Device">
+        update device set description = #{description} where device_id = #{deviceId}
+    </update>
 </mapper>

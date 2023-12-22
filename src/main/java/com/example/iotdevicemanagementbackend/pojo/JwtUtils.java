@@ -27,13 +27,13 @@ public class JwtUtils {
             DecodedJWT verify = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
             return 0;
         } catch (SignatureVerificationException e) {
-            return 1;
+            return 11;
         } catch (TokenExpiredException e) {
-            return 2;
+            return 12;
         } catch (AlgorithmMismatchException e) {
-            return 3;
+            return 13;
         } catch (Exception e) {
-            return 4;
+            return 14;
         }
     }
 }
