@@ -2,6 +2,7 @@ package com.example.iotdevicemanagementbackend.pojo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 public class Message {
 
@@ -14,6 +15,19 @@ public class Message {
     private BigDecimal longitude;
     private BigDecimal latitude;
 
+    public Message(int messageId, int deviceId, int alarm, String information, Timestamp sendTime, BigDecimal longitude, BigDecimal latitude) {
+        this.messageId = messageId;
+        this.deviceId = deviceId;
+        this.alarm = alarm;
+        this.information = information;
+        this.sendTime = sendTime;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+    public Message(int deviceId) {
+        this.deviceId = deviceId;
+    }
+
     public int getMessageId() {
         return messageId;
     }
@@ -24,6 +38,10 @@ public class Message {
 
     public int getAlarm() {
         return alarm;
+    }
+
+    public String getInformation() {
+        return information;
     }
 
     public Timestamp getSendTime() {
@@ -46,16 +64,16 @@ public class Message {
         this.deviceId = deviceId;
     }
 
-    public String getInformation() {
-        return information;
-    }
-
     public void setAlarm(int alarm) {
         this.alarm = alarm;
     }
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public void setSendTime(Timestamp sendTime) {
+        this.sendTime = sendTime;
     }
 
     public void setLatitude(BigDecimal latitude) {
@@ -66,7 +84,7 @@ public class Message {
         this.longitude = longitude;
     }
 
-    public void setSendTime(Timestamp sendTime) {
-        this.sendTime = sendTime;
+    public Long sendTimeToLong() {
+        return this.sendTime.getTime();
     }
 }

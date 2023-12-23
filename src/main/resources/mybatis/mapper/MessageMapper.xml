@@ -3,5 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.iotdevicemanagementbackend.mapper.MessageMapper">
+    <select id="queryMessageExist" parameterType="Message" resultType="int">
+        select count(*) from iot_device_management.message where device_id = #{deviceId};
+    </select>
 
+    <select id="queryMessage" parameterType="Message" resultType="Message">
+        select * from message where device_id = #{deviceId};
+    </select>
 </mapper>
