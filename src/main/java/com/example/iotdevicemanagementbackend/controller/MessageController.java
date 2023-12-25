@@ -3,6 +3,7 @@ package com.example.iotdevicemanagementbackend.controller;
 import com.example.iotdevicemanagementbackend.pojo.DeviceResponse;
 import com.example.iotdevicemanagementbackend.pojo.Message;
 import com.example.iotdevicemanagementbackend.pojo.MessageResponse;
+import com.example.iotdevicemanagementbackend.pojo.MqttConsumer;
 import com.example.iotdevicemanagementbackend.service.DeviceService;
 import com.example.iotdevicemanagementbackend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,12 @@ public class MessageController {
     public int queryUserMessageNum(@PathVariable int userId,
                                    @PathVariable String token) {
         return messageService.queryUserMessageNum(userId, token);
+    }
+
+    @RequestMapping("subscribe/{topic}/{qos}")
+    public Object subscribe(@PathVariable String topic,
+                            @PathVariable int qos) {
+        MqttConsumer.subscribe(topic, qos);
+        return "订阅主题"+topic+"成功";
     }
 }

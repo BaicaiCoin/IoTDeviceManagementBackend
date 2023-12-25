@@ -14,8 +14,8 @@ public class DeviceService {
     @Autowired
     DeviceMapper deviceMapper;
 
-    public int addDevice(String deviceName, int type, String description, int userId, String token) {
-        Device device = new Device(deviceName, type, description, userId);
+    public int addDevice(String deviceName, int type, String description, int userId, String clientId, String token) {
+        Device device = new Device(deviceName, type, description, userId, clientId);
         int verifyResult = JwtUtils.verify(token);
         if(verifyResult != 0) return verifyResult;
         int changeLine = deviceMapper.addDevice(device);
@@ -91,5 +91,12 @@ public class DeviceService {
             }
         }
         return count;
+    }
+
+    public int queryDeviceIdByClientId(String clientId) {
+        Device device = new Device(clientId);
+        int queryNum = deviceMapper.queryDeviceNumByClientId(device);
+        if(queryNum == 0)return 0;
+        return deviceMapper.queryDeviceIdByClientId(device);
     }
 }

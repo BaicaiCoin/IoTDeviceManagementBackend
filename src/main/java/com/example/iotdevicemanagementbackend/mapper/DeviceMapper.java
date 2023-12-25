@@ -23,4 +23,8 @@ public interface DeviceMapper {
     int changeType(Device device);
 
     int changeDescription(Device device);
+
+    int queryDeviceIdByClientId(Device device);
+
+    int queryDeviceNumByClientId(Device device);
 }

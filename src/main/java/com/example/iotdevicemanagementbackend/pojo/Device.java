@@ -10,26 +10,29 @@ public class Device {
     private int userId;
     private Timestamp createTime;
     private Timestamp lastActiveTime;
+    private String clientId;
 
-    public Device(String deviceName, int type, String description, int userId) {
+    public Device(String deviceName, int type, String description, int userId, String clientId) {
         this.deviceName = deviceName;
         this.type = type;
         this.description = description;
         this.userId = userId;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.lastActiveTime = new Timestamp(System.currentTimeMillis());
+        this.clientId = clientId;
     }
 
-    public Device(String deviceName, int type, String description, int userId, Timestamp createTime, Timestamp lastActiveTime) {
+    public Device(String deviceName, int type, String description, int userId, Timestamp createTime, Timestamp lastActiveTime, String clientId) {
         this.deviceName = deviceName;
         this.type = type;
         this.description = description;
         this.userId = userId;
         this.createTime = createTime;
         this.lastActiveTime = lastActiveTime;
+        this.clientId = clientId;
     }
 
-    public Device(int deviceId, String deviceName, int type, String description, int userId, Timestamp createTime, Timestamp lastActiveTime) {
+    public Device(int deviceId, String deviceName, int type, String description, int userId, Timestamp createTime, Timestamp lastActiveTime, String clientId) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.type = type;
@@ -37,11 +40,16 @@ public class Device {
         this.userId = userId;
         this.createTime = createTime;
         this.lastActiveTime = lastActiveTime;
+        this.clientId = clientId;
     }
 
     public Device(int createType, int id) {
         if(createType == 0) this.deviceId = id;
         else if(createType == 1)this.userId = id;
+    }
+
+    public Device(String clientId) {
+        this.clientId = clientId;
     }
 
     public Device(String createType, int deviceId, String content) {
@@ -81,6 +89,10 @@ public class Device {
         return lastActiveTime;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -107,5 +119,9 @@ public class Device {
 
     public void setLastActiveTime(Timestamp lastActiveTime) {
         this.lastActiveTime = lastActiveTime;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

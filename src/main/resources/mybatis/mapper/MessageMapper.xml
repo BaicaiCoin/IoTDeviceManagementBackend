@@ -10,4 +10,9 @@
     <select id="queryMessage" parameterType="Message" resultType="Message">
         select * from message where device_id = #{deviceId};
     </select>
+
+    <insert id="addMessage" parameterType="Message">
+        insert into message(divice_id, alarm, information, send_time, longitude, latitude) values (#{deviceId}, #{alarm}, #{information}, #{sendTime}, #{longitude}, #{latitude});
+    </insert>
+
 </mapper>

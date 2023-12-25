@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.iotdevicemanagementbackend.mapper.DeviceMapper">
     <insert id="addDevice" parameterType="Device">
-        insert into iot_device_management.device(device_name, type, description, user_id, create_time, last_active_time) values (#{deviceName}, #{type}, #{description}, #{userId}, #{createTime}, #{lastActiveTime});
+        insert into iot_device_management.device(device_name, type, description, user_id, create_time, last_active_time, clientId) values (#{deviceName}, #{type}, #{description}, #{userId}, #{createTime}, #{lastActiveTime}, #{clientId});
     </insert>
 
     <select id="queryDeviceExist" parameterType="Device" resultType="int">
@@ -34,4 +34,12 @@
     <update id="changeDescription" parameterType="Device">
         update device set description = #{description} where device_id = #{deviceId}
     </update>
+
+    <select id="queryDeviceIdByClientId" parameterType="Device" resultType="int">
+        select device_id from device where client_id = #{clientId};
+    </select>
+
+    <select id="queryDeviceNumByClientId" parameterType="Device" resultType="int">
+        select count(*) from device where client_id = #{clientId};
+    </select>
 </mapper>

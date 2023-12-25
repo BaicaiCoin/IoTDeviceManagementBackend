@@ -12,10 +12,10 @@ public class Message {
     private int alarm;
     private String information;
     private Timestamp sendTime;
-    private BigDecimal longitude;
-    private BigDecimal latitude;
+    private double longitude;
+    private double latitude;
 
-    public Message(int messageId, int deviceId, int alarm, String information, Timestamp sendTime, BigDecimal longitude, BigDecimal latitude) {
+    public Message(int messageId, int deviceId, int alarm, String information, Timestamp sendTime, double longitude, double latitude) {
         this.messageId = messageId;
         this.deviceId = deviceId;
         this.alarm = alarm;
@@ -24,6 +24,16 @@ public class Message {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+    public Message(int deviceId, int alarm, String information, Timestamp sendTime, double longitude, double latitude) {
+        this.deviceId = deviceId;
+        this.alarm = alarm;
+        this.information = information;
+        this.sendTime = sendTime;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Message(int deviceId) {
         this.deviceId = deviceId;
     }
@@ -48,11 +58,11 @@ public class Message {
         return sendTime;
     }
 
-    public BigDecimal getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public BigDecimal getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -76,11 +86,11 @@ public class Message {
         this.sendTime = sendTime;
     }
 
-    public void setLatitude(BigDecimal latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(BigDecimal longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

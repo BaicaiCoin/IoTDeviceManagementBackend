@@ -6,6 +6,8 @@ import com.example.iotdevicemanagementbackend.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -57,5 +59,10 @@ public class MessageService {
             count += messageCount;
         }
         return count;
+    }
+
+    public int addMessage(int deviceId, int alarm, String information, Timestamp sendTime, double longitude, double latitude) {
+        Message message = new Message(deviceId, alarm, information, sendTime, longitude, latitude);
+        return messageMapper.addMessage(message);
     }
 }

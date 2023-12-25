@@ -11,13 +11,14 @@ public class DeviceController {
     @Autowired
     DeviceService deviceService;
 
-    @RequestMapping("addDevice/{deviceName}/{type}/{description}/{userId}/{token}")
+    @RequestMapping("addDevice/{deviceName}/{type}/{description}/{userId}/{clientId}/{token}")
     public int addDevice(@PathVariable String deviceName,
                      @PathVariable int type,
                      @PathVariable String description,
                      @PathVariable int userId,
+                     @PathVariable String clientId,
                      @PathVariable String token) {
-        return deviceService.addDevice(deviceName, type, description, userId, token);
+        return deviceService.addDevice(deviceName, type, description, userId, clientId, token);
     }
 
     @RequestMapping("queryDevice/{deviceId}/{token}")
