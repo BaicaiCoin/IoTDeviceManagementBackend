@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.iotdevicemanagementbackend.mapper.UserMapper">
     <insert id="addUser" parameterType="User">
-        insert into iot_device_management.user(user_name, email, password) values (#{userName}, #{email}, #{password});
+        insert into bsproject.user(user_name, email, password) values (#{userName}, #{email}, #{password});
     </insert>
 
     <select id="queryUserByName" parameterType="User" resultType="int">
@@ -37,6 +37,10 @@
 
     <select id="queryNameByEmail" parameterType="User" resultType="String">
         select user_name from user where email = #{email};
+    </select>
+
+    <select id="queryUserById" parameterType="User" resultType="User">
+        select * from user where user_id = #{userId};
     </select>
 
     <update id="changeEmail" parameterType="User">

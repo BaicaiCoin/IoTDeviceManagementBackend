@@ -9,6 +9,7 @@ import com.example.iotdevicemanagementbackend.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/message")
 public class MessageController {
@@ -16,7 +17,7 @@ public class MessageController {
     MessageService messageService;
 
     @RequestMapping("queryMessages/{deviceId}/{token}")
-    public MessageResponse queryDevices(@PathVariable int deviceId,
+    public MessageResponse queryMessages(@PathVariable int deviceId,
                                         @PathVariable String token) {
         return messageService.queryMessages(deviceId, token);
     }
@@ -44,5 +45,17 @@ public class MessageController {
                             @PathVariable int qos) {
         MqttConsumer.subscribe(topic, qos);
         return "订阅主题"+topic+"成功";
+    }
+
+    @RequestMapping("latestWeekMessages/{deviceId}/{token}")
+    public int[] latestWeekMessages(@PathVariable int deviceId,
+                                    @PathVariable String token) {
+        return messageService.latestWeekMessages(deviceId, token);
+    }
+
+    @RequestMapping("alarmNum/{deviceId}/{token}")
+    public int[] alarmNum(@PathVariable int deviceId,
+                          @PathVariable String token) {
+        return messageService.alarmNum(deviceId, token);
     }
 }

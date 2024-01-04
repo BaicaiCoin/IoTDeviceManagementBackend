@@ -56,7 +56,7 @@ public class MqttConsumerCallback implements org.eclipse.paho.client.mqttv3.Mqtt
             Gson gson = new Gson();
             ReceivedMessage receivedMessage = gson.fromJson(msg, ReceivedMessage.class);
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/iot_device_management", "root", "cyy021027");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://121.43.152.248:3306/bsproject", "root", "cyy021027");
             String sqlMessage = "select device_id from device where client_id=?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlMessage);
             preparedStatement.setString(1, receivedMessage.getClientId());
@@ -76,6 +76,20 @@ public class MqttConsumerCallback implements org.eclipse.paho.client.mqttv3.Mqtt
                 preparedStatement1.setDouble(6, receivedMessage.getLat());
                 int addResult = preparedStatement1.executeUpdate();
                 preparedStatement1.close();
+                String sqlMessage2 = "select last_active_time from device where device_id=?";
+                PreparedStatement preparedStatement2 = connection.prepareStatement(sqlMessage2);
+                preparedStatement2.setInt(1, deviceId);
+                ResultSet queryResult2 = preparedStatement2.executeQuery();
+                queryResult2.next();
+                Timestamp lastActiveTime = queryResult2.getTimestamp(1);
+                if(lastActiveTime.before(new Timestamp(receivedMessage.getTimestamp()))) {
+                    String sqlMessage3 = "update device set last_active_time=? where device_id=?";
+                    PreparedStatement preparedStatement3 = connection.prepareStatement(sqlMessage3);
+                    preparedStatement3.setTimestamp(1, new Timestamp(receivedMessage.getTimestamp()));
+                    preparedStatement3.setInt(2, deviceId);
+                    int updateNum = preparedStatement3.executeUpdate();
+                    if(updateNum != 0) System.out.println("更新成功");
+                }
             }
             System.out.println("将消息存储进数据库");
         } catch (Exception e) {

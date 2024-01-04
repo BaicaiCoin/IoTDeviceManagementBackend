@@ -29,4 +29,6 @@ public interface UserMapper {
     int changeEmail(User user);
 
     int changePassword(User user);
+
+    User queryUserById(User user);
 }

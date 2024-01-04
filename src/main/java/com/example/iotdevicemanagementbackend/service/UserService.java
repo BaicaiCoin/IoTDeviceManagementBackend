@@ -1,12 +1,11 @@
 package com.example.iotdevicemanagementbackend.service;
 
-import com.example.iotdevicemanagementbackend.pojo.User;
-import com.example.iotdevicemanagementbackend.pojo.LoginResult;
+import com.example.iotdevicemanagementbackend.pojo.*;
 import com.example.iotdevicemanagementbackend.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.iotdevicemanagementbackend.pojo.JwtUtils;
-import com.example.iotdevicemanagementbackend.pojo.JasyptUtils;
+
+import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +13,10 @@ import java.util.regex.Pattern;
 public class UserService {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    DeviceService deviceService;
+    @Autowired
+    MessageService messageService;
 
     public int createUser(String userName, String email, String password) {
         String encryptedPassword = JasyptUtils.encrypt(password, "123456");
@@ -99,9 +102,28 @@ public class UserService {
     }
 
     public int changePassword(int userId, String newPassword) {
-        User user = new User(userId, "", "", newPassword);
+        String encryptedPassword = JasyptUtils.encrypt(newPassword, "123456");
+        User user = new User(userId, "", "", encryptedPassword);
         if(newPassword.length() < 6) return 1;
         userMapper.changePassword(user);
         return 0;
+    }
+
+    public User queryUser(int userId) {
+        User user = new User(userId);
+        return userMapper.queryUserById(user);
+    }
+
+    public int[] latestWeekMessageNum(int userId, String token) {
+        int[] result = new int[7];
+        DeviceResponse deviceResponse = deviceService.queryDevices(userId, token);
+        if(deviceResponse.getExistOrNot() == 1) {
+            Device[] devices = deviceResponse.getDevices();
+            for(Device device: devices) {
+                int[] deviceResult = messageService.latestWeekMessages(device.getDeviceId(), token);
+                for(int i=0;i<7;i++) result[i] += deviceResult[i];
+            }
+        }
+        return result;
     }
 }

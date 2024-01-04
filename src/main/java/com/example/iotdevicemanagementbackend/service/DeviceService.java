@@ -1,11 +1,9 @@
 package com.example.iotdevicemanagementbackend.service;
 
-import com.example.iotdevicemanagementbackend.pojo.Device;
-import com.example.iotdevicemanagementbackend.pojo.DeviceResponse;
+import com.example.iotdevicemanagementbackend.pojo.*;
 import com.example.iotdevicemanagementbackend.mapper.DeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.iotdevicemanagementbackend.pojo.JwtUtils;
 
 import java.sql.Timestamp;
 
@@ -18,6 +16,8 @@ public class DeviceService {
         Device device = new Device(deviceName, type, description, userId, clientId);
         int verifyResult = JwtUtils.verify(token);
         if(verifyResult != 0) return verifyResult;
+        int clientNum = queryDeviceIdByClientId(clientId);
+        if(clientNum != 0)return 2;
         int changeLine = deviceMapper.addDevice(device);
         if(changeLine != 0) return 0;
         else return 1;
@@ -70,6 +70,14 @@ public class DeviceService {
         } else {
             return 0;
         }
+    }
+
+    public int changeDeviceNew(int deviceId, String name, String type, String description, String token) {
+        int resultOne = changeDevice(deviceId, "name", name, token);
+        int resultTwo = changeDevice(deviceId, "type", type, token);
+        int resultThree = changeDevice(deviceId, "description", name, token);
+        if(resultOne == 1 && resultTwo == 1 && resultThree == 1)return 1;
+        else return 0;
     }
 
     public int queryDeviceNum(int userId, String token) {

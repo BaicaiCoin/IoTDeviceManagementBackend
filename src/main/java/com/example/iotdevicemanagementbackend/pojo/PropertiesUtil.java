@@ -8,7 +8,7 @@ public class PropertiesUtil {
     public static String MQTT_TOPIC;
 
     static {
-        MQTT_HOST = "tcp://localhost:1883";
+        MQTT_HOST = "tcp://121.43.152.248:1884";
         MQTT_CLIENT_ID = "client_id_001";
         MQTT_USER_NAME = "cabbageCoin";
         MQTT_PASSWORD = "cyy021027";
